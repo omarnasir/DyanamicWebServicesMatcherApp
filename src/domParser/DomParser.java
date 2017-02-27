@@ -11,18 +11,19 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import dataObjects.MessageType;
-import dataObjects.PrimitiveTypes;
 import postGres.PostgreSQLJDBC;
 import postGres.SQLScripts;
 
 public class DomParser {
 
 	public static void domParser() {
-
-		File folder = new File("src/resources");
+		
+		File folder = new File("src/resources/WSDL");
 		File[] listOfFiles = folder.listFiles();
 
+		PostgreSQLJDBC.connection();
+		SQLScripts.deleteDatabase();
+		
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile() && listOfFiles[i].getName().contains(".wsdl")) {
 				boolean result = domParserMethod(listOfFiles[i]);
@@ -33,10 +34,7 @@ public class DomParser {
 
 	private static boolean domParserMethod(File fileObj) {
 
-		try {
-
-			PostgreSQLJDBC.connection();
-
+		try {			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			dbFactory.setIgnoringElementContentWhitespace(true);
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

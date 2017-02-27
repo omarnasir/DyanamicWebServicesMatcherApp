@@ -47,4 +47,14 @@ public class PostgreSQLJDBC {
 			return null;
 		}
 	}
+	public static void executeDeleteQuery(String sql)
+	{
+		try {
+			stmt = c.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

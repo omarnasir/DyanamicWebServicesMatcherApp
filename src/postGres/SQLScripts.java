@@ -24,4 +24,20 @@ public class SQLScripts {
 		 		+ "AND S.\"ServiceID\" = O.\"ServiceID\"), '" + elementName + "');";
 		 PostgreSQLJDBC.executeInsertQuery(sql);
 	}
+	
+	public static void deleteDatabase()
+	{
+		 String sql = "DELETE FROM \"Service\";";
+		 PostgreSQLJDBC.executeDeleteQuery(sql);
+		 sql = "DELETE FROM \"Operation\";";
+		 PostgreSQLJDBC.executeDeleteQuery(sql);
+		 sql = "DELETE FROM \"Element\";";
+		 PostgreSQLJDBC.executeDeleteQuery(sql);
+		 sql = "ALTER SEQUENCE \"seqService\" RESTART;";
+		 PostgreSQLJDBC.executeDeleteQuery(sql);
+		 sql = "ALTER SEQUENCE \"seqOperation\" RESTART;";
+		 PostgreSQLJDBC.executeDeleteQuery(sql);
+		 sql = "ALTER SEQUENCE \"seqElement\" RESTART;";
+		 PostgreSQLJDBC.executeDeleteQuery(sql);
+	}
 }

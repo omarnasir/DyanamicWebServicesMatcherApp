@@ -8,15 +8,14 @@ import postGres.PostgreSQLJDBC;
 
 public class GenerateDataObjects {
 	
-	public static ServiceDetail populateWSDLServiceDetail(String ServiceName)
+	public static ServiceDetail populateWSDLServiceDetail(String ServiceName, String WSDLName)
 			throws SQLException {
 		String sql;
 		ResultSet result;
 		sql = "SELECT O.\"OperationName\",O.\"OperationType\",E.\"ElementName\" from \"Element\" AS E,\"Operation\" "
 				+ "AS O, \"Service\" As S " + "Where S.\"ServiceID\" = O.\"ServiceID\" "
 				+ "And O.\"OperationID\" = E.\"OperationID\" " + "AND O.\"OperationType\" = '0' "
-				+ "AND S.\"WSDLName\" = '" + ServiceName + "';";
-//						+ "AND S.\"ServiceName\" = 'AccountService';";
+				+ "AND S.\"WSDLName\" = '" + WSDLName + "';";
 				
 		result = PostgreSQLJDBC.executeSelectQuery(sql);
 		
@@ -24,6 +23,7 @@ public class GenerateDataObjects {
 		
 		ServiceDetail serviceDetailOBj = new ServiceDetail(); //Create new ServiceDetail Obj
 		serviceDetailOBj.setServiceName(ServiceName); //Set its name
+		serviceDetailOBj.setWSDLName(WSDLName);
 		
 		List<ServiceDetail.Operation> operationList = serviceDetailOBj.getOperations(); //Create Operations list for Service obj
 		List<ServiceDetail.Element> elementListObj = null;

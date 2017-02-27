@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDetail {
+	protected String WSDLName;
 	protected String ServiceName;
 	protected List<Operation> Operations;
 
@@ -25,6 +26,14 @@ public class ServiceDetail {
 
 	public void setOperations(List<Operation> operations) {
 		Operations = operations;
+	}
+
+	public String getWSDLName() {
+		return WSDLName;
+	}
+
+	public void setWSDLName(String WSDLName) {
+		this.WSDLName = WSDLName;
 	}
 
 	public static class Operation{
