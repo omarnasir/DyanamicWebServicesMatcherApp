@@ -25,6 +25,15 @@ public class SQLScripts {
 		 PostgreSQLJDBC.executeInsertQuery(sql);
 	}
 	
+	public static void annotationQuery(String messageName, String elementName, String annotation, String wsdlName)
+	{
+		 String sql = "INSERT INTO \"Element\" (\"ElementID\",\"OperationID\",\"ElementName\", \"Annotation\")"
+		 + "VALUES (nextval('\"seqElement\"'),(SELECT O.\"OperationID\" FROM \"Operation\" AS O, \"Service\" AS S "
+		 + "WHERE O.\"MessageName\" = '" + messageName + "' AND S.\"WSDLName\" = '" + wsdlName + "' "
+		 		+ "AND S.\"ServiceID\" = O.\"ServiceID\"), '" + elementName + "' , '" + annotation + "');";
+		 PostgreSQLJDBC.executeInsertQuery(sql);
+	}
+	
 	public static void deleteDatabase()
 	{
 		 String sql = "DELETE FROM \"Service\";";

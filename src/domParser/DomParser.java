@@ -16,23 +16,26 @@ import postGres.SQLScripts;
 
 public class DomParser {
 
-	public static void domParser() {
+	public static void domParser(boolean isSemantic) {
 		
-		File folder = new File("src/resources/WSDL");
-		File[] listOfFiles = folder.listFiles();
-
 		PostgreSQLJDBC.connection();
 		SQLScripts.deleteDatabase();
 		
+		String path = "/WSDL";
+		if(isSemantic) path = "/SAWSDL";
+		
+		File folder = new File("src/resources" + path);
+		File[] listOfFiles = folder.listFiles();
+		
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile() && listOfFiles[i].getName().contains(".wsdl")) {
-				boolean result = domParserMethod(listOfFiles[i]);
+				boolean result = domParserMethod(listOfFiles[i], isSemantic);
 				System.out.println("File " + listOfFiles[i].getName() + "; Result: " + result);
 			}
 		}
 	}
 
-	private static boolean domParserMethod(File fileObj) {
+	private static boolean domParserMethod(File fileObj, boolean isSemantic) {
 
 		try {			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -67,7 +70,7 @@ public class DomParser {
 				//System.out.println(serviceName);
 				SQLScripts.serviceQuery(serviceName, fileObj.getName());
 				PortTypes.parsePortTypes(portType);
-				Methods.parseMethods(listObj, schema, fileObj.getName());
+				Messages.parseMessages(listObj, schema, fileObj.getName(), isSemantic);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

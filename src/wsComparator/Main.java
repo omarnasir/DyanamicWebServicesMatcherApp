@@ -15,10 +15,13 @@ import postGres.PostgreSQLJDBC;
 
 public class Main {
 
+	static boolean isSemantic = true;
+	
 	public static void main(String[] args) {
 
-		DomParser.domParser();
+		DomParser.domParser(isSemantic);
 		
+		/*
 		List<String> ServiceNames = new ArrayList<String>();
 		List<String> WSDLNames = new ArrayList<String>();
 		File outputXML = new File("./src/Output.xml");
@@ -64,5 +67,6 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
+		*/
 	}
 }

@@ -23,7 +23,9 @@ public class Helper {
 	}
 
 	public static String getNodeValue(Node obj) {
-		return obj.getAttributes().getNamedItem("name").getNodeValue();// .getNamedItem("name").getNodeValue();
+		if(obj.getAttributes().getNamedItem("name") != null)
+			return obj.getAttributes().getNamedItem("name").getNodeValue();// .getNamedItem("name").getNodeValue();
+		return "";
 	}
 
 	public static String getMessageName(NodeList list, int index) {
@@ -32,16 +34,16 @@ public class Helper {
 		return message.substring(pos + 1);
 	}
 
-	public static MessageType getElementNamefromMessage(NodeList list, int index) {
+	public static MessageType getElementNamefromMessage(Node node) {
 		MessageType obj = new MessageType();
 		
 		String value = null;
 		boolean isElement = true;
-		Node nd = list.item(index).getAttributes().getNamedItem("element");
+		Node nd = node.getAttributes().getNamedItem("element");
 		if (nd != null) {
 			value = nd.getNodeValue();
 		} else {
-			nd = list.item(index).getAttributes().getNamedItem("name");
+			nd = node.getAttributes().getNamedItem("name");
 			if (nd != null) {
 				value = nd.getNodeValue();
 				isElement = false;
@@ -54,5 +56,15 @@ public class Helper {
 		else
 			obj.setName(value.substring(pos + 1));
 		return obj;
+	}
+	
+	public static String getPartTypefromMessage(Node node) {	
+		String value = null;
+		
+		Node nd = node.getAttributes().getNamedItem("type");
+		if (nd != null) 
+			value = nd.getNodeValue();
+
+		return value;
 	}
 }
