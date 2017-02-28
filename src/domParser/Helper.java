@@ -1,35 +1,36 @@
 package domParser;
 
-import java.util.List;
-
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import dataObjects.MessageType;
+import dataObjects.Tags;
 
 public class Helper {
-	public static List<String> differentiatorSequenceComplexTypes(List<String> result, Node seq) {
-		for (int j = 0; j <seq.getChildNodes().getLength(); j++)
-		{
-			if (checkNode(seq.getChildNodes().item(j), "element")) {
-				result = Elements.getElement(seq.getChildNodes().item(j), result);
-			}
-		}
-		return result;
-	}
 
 	public static boolean checkNode(Node obj, String nodeName) {
 		return obj.getNodeName().toLowerCase().contains(nodeName);
 	}
 
 	public static String getNodeValue(Node obj) {
-		if(obj.getAttributes().getNamedItem("name") != null)
-			return obj.getAttributes().getNamedItem("name").getNodeValue();// .getNamedItem("name").getNodeValue();
+		if(obj.getAttributes() != null)
+		{
+			if(obj.getAttributes().getNamedItem(Tags.name.name()) != null)
+				return obj.getAttributes().getNamedItem(Tags.name.name()).getNodeValue();
+		}
 		return "";
+	}
+	
+	public static String getNodeValue(Node obj, String attribute) {
+		if(obj.getAttributes() != null)
+		{
+			if(obj.getAttributes().getNamedItem(attribute) != null)
+				return obj.getAttributes().getNamedItem(attribute).getNodeValue();
+		}
+		return null;
 	}
 
 	public static String getMessageName(Node obj) {
-		String message = obj.getAttributes().getNamedItem("message").getNodeValue();
+		String message = obj.getAttributes().getNamedItem(Tags.message.name()).getNodeValue();
 		int pos = message.indexOf(':');
 		return message.substring(pos + 1);
 	}

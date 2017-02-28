@@ -3,7 +3,6 @@ package dataObjects;
 public class MessageType {
 	private String element;
 	private String name;
-	private String type;
 	
 	public String getElement() {
 		return element;
@@ -16,13 +15,6 @@ public class MessageType {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	
+	}	
 	
 }

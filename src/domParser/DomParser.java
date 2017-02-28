@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import dataObjects.Tags;
 import postGres.PostgreSQLJDBC;
 import postGres.SQLScripts;
 
@@ -53,17 +54,17 @@ public class DomParser {
 			
 			for (int i = 0; i < listObj.getLength(); i++) {
 				String temp = listObj.item(i).getNodeName().toLowerCase();
-				if (temp.contains("service")) {
+				if (temp.contains(Tags.service.name())) {
 					service = listObj.item(i);
-				} else if (temp.contains("porttype")) {
+				} else if (temp.contains(Tags.porttype.name())) {
 					Node port = listObj.item(i);
 					portType.add(port);
-				} else if (temp.contains("binding")) {
+				} else if (temp.contains(Tags.binding.name())) {
 					Node binding = listObj.item(i);
 					bindingList.add(binding);
-				} else if (temp.contains("types")) {
+				} else if (temp.contains(Tags.types.name())) {
 					for (int j = 0; j < listObj.item(i).getChildNodes().getLength(); j++) {
-						if (Helper.checkNode(listObj.item(i).getChildNodes().item(j), "schema")) {
+						if (Helper.checkNode(listObj.item(i).getChildNodes().item(j),Tags.schema.name())) {
 							schemaList.add(listObj.item(i).getChildNodes().item(j));
 						}
 					}
@@ -75,7 +76,8 @@ public class DomParser {
 				SQLScripts.serviceQuery(serviceName, fileObj.getName());
 				PortTypes.parsePortTypes(portType, bindingList);
 				for (Node schema : schemaList){
-					Messages.parseMessages(listObj, schema, fileObj.getName(), isSemantic);
+					if(!isSemantic) Messages.parseMessagesSyntactic(listObj, schema, fileObj.getName());
+					else Messages.parseMessagesSemantic(listObj, schema, fileObj.getName());
 				}
 			}
 		} catch (Exception e) {

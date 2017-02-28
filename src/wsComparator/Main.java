@@ -21,7 +21,6 @@ public class Main {
 
 		DomParser.domParser(isSemantic);
 		
-		/*
 		List<String> ServiceNames = new ArrayList<String>();
 		List<String> WSDLNames = new ArrayList<String>();
 		File outputXML = new File("./src/Output.xml");
@@ -67,6 +66,6 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
-		*/
+		
 	}
 }
