@@ -19,8 +19,7 @@ public class Messages {
 
 				for (int j = 0; j < listObjMessagePart.getLength(); j++) { // Iterate through childNodes of <message>
 
-					if (Helper.checkNode(listObjMessagePart.item(j), "part")) { // Find <part> tags
-						
+					if (Helper.checkNode(listObjMessagePart.item(j), "part")) { // Find <part> tags	
 						//FORK HERE
 						if(!isSemantic){
 							MessageType messageObj = Helper.getElementNamefromMessage(listObjMessagePart.item(j)); // get <Element> or <name>

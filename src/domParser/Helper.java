@@ -28,12 +28,12 @@ public class Helper {
 		return "";
 	}
 
-	public static String getMessageName(NodeList list, int index) {
-		String message = list.item(index).getAttributes().getNamedItem("message").getNodeValue();
+	public static String getMessageName(Node obj) {
+		String message = obj.getAttributes().getNamedItem("message").getNodeValue();
 		int pos = message.indexOf(':');
 		return message.substring(pos + 1);
 	}
-
+	
 	public static MessageType getElementNamefromMessage(Node node) {
 		MessageType obj = new MessageType();
 		
@@ -62,9 +62,14 @@ public class Helper {
 		String value = null;
 		
 		Node nd = node.getAttributes().getNamedItem("type");
-		if (nd != null) 
+		if (nd != null) {
 			value = nd.getNodeValue();
-
-		return value;
+		} else {
+			nd = node.getAttributes().getNamedItem("element");
+			if (nd != null) {
+				value = nd.getNodeValue();
+			}
+		}
+		return value.substring(value.indexOf(':') + 1);
 	}
 }

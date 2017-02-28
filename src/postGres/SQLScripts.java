@@ -8,7 +8,7 @@ public class SQLScripts {
 		PostgreSQLJDBC.executeInsertQuery(sql);
 	}
 	
-	public static void operationQuery(String operationName, String messageName, Integer operationType)
+	public static void operationQuery(String operationName, String messageName, String operationType)
 	{
 		 String sql = "INSERT INTO \"Operation\" (\"OperationID\",\"ServiceID\",\"OperationName\",\"MessageName\",\"OperationType\") " 
 		 + "VALUES (nextval('\"seqOperation\"'),currval('\"seqService\"'), '"

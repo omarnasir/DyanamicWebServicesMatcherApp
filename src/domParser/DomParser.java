@@ -48,7 +48,8 @@ public class DomParser {
 
 			Node service = null;
 			List<Node> portType = new ArrayList<Node>();
-			Node schema = null;
+			List<Node> schemaList = new ArrayList<Node>();
+			List<Node> bindingList = new ArrayList<Node>();
 			
 			for (int i = 0; i < listObj.getLength(); i++) {
 				String temp = listObj.item(i).getNodeName().toLowerCase();
@@ -57,20 +58,25 @@ public class DomParser {
 				} else if (temp.contains("porttype")) {
 					Node port = listObj.item(i);
 					portType.add(port);
+				} else if (temp.contains("binding")) {
+					Node binding = listObj.item(i);
+					bindingList.add(binding);
 				} else if (temp.contains("types")) {
 					for (int j = 0; j < listObj.item(i).getChildNodes().getLength(); j++) {
 						if (Helper.checkNode(listObj.item(i).getChildNodes().item(j), "schema")) {
-							schema = listObj.item(i).getChildNodes().item(j);
+							schemaList.add(listObj.item(i).getChildNodes().item(j));
 						}
 					}
 				}
 			}
-			if(service != null && !portType.isEmpty() && schema != null){
+			if(service != null && !portType.isEmpty() && !schemaList.isEmpty()){
 				String serviceName = Helper.getNodeValue(service);
 				//System.out.println(serviceName);
 				SQLScripts.serviceQuery(serviceName, fileObj.getName());
-				PortTypes.parsePortTypes(portType);
-				Messages.parseMessages(listObj, schema, fileObj.getName(), isSemantic);
+				PortTypes.parsePortTypes(portType, bindingList);
+				for (Node schema : schemaList){
+					Messages.parseMessages(listObj, schema, fileObj.getName(), isSemantic);
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

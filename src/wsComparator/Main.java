@@ -15,7 +15,7 @@ import postGres.PostgreSQLJDBC;
 
 public class Main {
 
-	static boolean isSemantic = true;
+	static boolean isSemantic = false;
 	
 	public static void main(String[] args) {
 

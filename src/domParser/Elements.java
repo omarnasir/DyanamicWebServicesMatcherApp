@@ -14,7 +14,8 @@ public class Elements {
 			result = new ArrayList<String>();
 		}
 		try{
-			if (Helper.checkNode(list, "element")) { // If Element found
+			//if (Helper.checkNode(list, "element")) { // If Element found
+			if(list.getAttributes() != null){
 				if (list.getAttributes().getNamedItem("type") != null) { // check if type is defined here or not
 					boolean check = PrimitiveTypes.checkPrimitiveTypes(list);
 					if (check) {
@@ -24,22 +25,25 @@ public class Elements {
 				}
 				else{	// go inside
 					for (int i = 0; i < list.getChildNodes().getLength(); i++) { //child nodes of <element> without <type>
-						if (Helper.checkNode(list.getChildNodes().item(i), "complextype")) { // get <complexType>
-							Node obj = list.getChildNodes().item(i); //node for complexType 
-							for (int k = 0; k < obj.getChildNodes().getLength(); k++) { // iterate through <complexType>  children
-								if (Helper.checkNode(obj.getChildNodes().item(k), "sequence")) {
-									obj = obj.getChildNodes().item(k); //get <sequence>
-									result = Helper.differentiatorSequenceComplexTypes(result, obj);
-									}
-							}
-						}
-						else if (Helper.checkNode(list.getChildNodes().item(i), "sequence")) {
-							Node seq = list.getChildNodes().item(i);
-							result = Helper.differentiatorSequenceComplexTypes(result, seq);
-						}
+						result = Elements.getElement(list.getChildNodes().item(i), result);
+						
+//						if (Helper.checkNode(list.getChildNodes().item(i), "complextype")) { // get <complexType>
+//							Node obj = list.getChildNodes().item(i); //node for complexType 
+//							for (int k = 0; k < obj.getChildNodes().getLength(); k++) { // iterate through <complexType>  children
+//								if (Helper.checkNode(obj.getChildNodes().item(k), "sequence")) {
+//									obj = obj.getChildNodes().item(k); //get <sequence>
+//									result = Helper.differentiatorSequenceComplexTypes(result, obj);
+//									}
+//							}
+//						}
+//						else if (Helper.checkNode(list.getChildNodes().item(i), "sequence")) {
+//							Node seq = list.getChildNodes().item(i);
+//							result = Helper.differentiatorSequenceComplexTypes(result, seq);
+//						}
 					}
 				}
 			}
+			//}
 			return result;
 		}
 		catch (Exception e)
@@ -60,13 +64,8 @@ public class Elements {
 			return annotationList;
 		}
 		else{
-			for (int i = 0; i < node.getChildNodes().getLength(); i++) { //child nodes of <complexType> or <simpleType> without <annotation>
-				if (Helper.checkNode(node.getChildNodes().item(i), "sequence")) { // get <sequence>
-					Node seqObj = node.getChildNodes().item(i); //node for complexType 
-					for (int k = 0; k < seqObj.getChildNodes().getLength(); k++) { // iterate through <sequence> children
-						getAnnotationList(seqObj.getChildNodes().item(k), annotationList);
-					}
-				}
+			for (int i = 0; i < node.getChildNodes().getLength(); i++) { //child nodes 
+				getAnnotationList(node.getChildNodes().item(i), annotationList);
 			}
 		}
 		return annotationList;
@@ -74,9 +73,11 @@ public class Elements {
 
 	private static Pair<String,String> checkAnnotation(Node node) {
 		Pair<String,String> pairObj = null;
-		Node obj = node.getAttributes().getNamedItem("sawsdl:modelReference");
-		if (obj != null) { // check if annotation exists here or not
-			pairObj = new Pair<String, String>(Helper.getNodeValue(node), obj.getNodeValue().substring(obj.getNodeValue().indexOf("#")+1));
+		if(node.getAttributes() != null){
+			Node obj = node.getAttributes().getNamedItem("sawsdl:modelReference");
+			if (obj != null) { // check if annotation exists here or not
+				pairObj = new Pair<String, String>(Helper.getNodeValue(node), obj.getNodeValue().substring(obj.getNodeValue().indexOf("#")+1));
+			}
 		}
 		return pairObj;
 	}
