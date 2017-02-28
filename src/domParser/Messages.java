@@ -64,10 +64,11 @@ public class Messages {
 						for (int i = 0; i < schema.getChildNodes().getLength(); i++) {
 							if(schema.getChildNodes().item(i).getAttributes() != null){ // Iterate through <element> inside Schema
 								if (Helper.getNodeValue(schema.getChildNodes().item(i)).toLowerCase().contentEquals(value.toLowerCase())) {
-									annotationList = Elements.getAnnotationList(schema.getChildNodes().item(i), annotationList);
+									annotationList = Elements.getAnnotationList(schema.getChildNodes().item(i), schema, annotationList);
 									for(int k =0; k<annotationList.size(); k++){
 										SQLScripts.annotationQuery(Helper.getNodeValue(listObj.item(m)), annotationList.get(k).getKey(),annotationList.get(k).getValue(), wsdlName);
 									}
+									break;
 								}
 							}
 						}

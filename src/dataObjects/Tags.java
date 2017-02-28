@@ -7,6 +7,7 @@ public enum Tags {
 	element,
 	complextype,
 	sequence,
+	simpletype,
 	name,
 	message,
 	part,
