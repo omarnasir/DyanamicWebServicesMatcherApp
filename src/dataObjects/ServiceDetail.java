@@ -64,13 +64,22 @@ public class ServiceDetail {
 	
 	public static class Element{
 		protected String ElementName;
-
+		protected String Annotation;
+		
 		public String getElementName() {
 			return ElementName;
 		}
 
 		public void setElementName(String elementName) {
 			ElementName = elementName;
+		}
+
+		public String getAnnotation() {
+			return Annotation;
+		}
+
+		public void setAnnotation(String annotation) {
+			Annotation = annotation;
 		}
 	}
 }

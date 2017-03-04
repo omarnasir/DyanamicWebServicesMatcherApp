@@ -21,6 +21,8 @@ public class Main {
 
 		DomParser.domParser(isSemantic);
 		
+		if(isSemantic) OntologyComparator.initializeOntology();
+		
 		List<String> ServiceNames = new ArrayList<String>();
 		List<String> WSDLNames = new ArrayList<String>();
 		File outputXML = new File("./src/Output.xml");
@@ -45,14 +47,14 @@ public class Main {
 			WSMatchingType matchingObj = factory.createWSMatchingType();
 
 			for (int i = 0; i < ServiceNames.size(); i++) {//Iterate through all WSDLs
-				ServiceDetail serviceDetailOutputObj = GenerateDataObjects.populateWSDLServiceDetail(ServiceNames.get(i),WSDLNames.get(i)); //Populate output WSDL
+				ServiceDetail serviceDetailOutputObj = GenerateDataObjects.populateWSDLServiceDetail(ServiceNames.get(i),WSDLNames.get(i), "1"); //Populate output WSDL
 				for (int j = 0; j < ServiceNames.size(); j++) {
 					if(j == i)
 					{
 						continue;
 					}
-					ServiceDetail serviceDetailInputObj = GenerateDataObjects.populateWSDLServiceDetail(ServiceNames.get(j),WSDLNames.get(j));
-					MatchedWebServiceType serviceObj = WSMatcher.compareWSDLS(serviceDetailOutputObj, serviceDetailInputObj);
+					ServiceDetail serviceDetailInputObj = GenerateDataObjects.populateWSDLServiceDetail(ServiceNames.get(j),WSDLNames.get(j), "0");
+					MatchedWebServiceType serviceObj = WSMatcher.compareWSDLS(serviceDetailOutputObj, serviceDetailInputObj, isSemantic);
 					if(serviceObj != null)
 						matchingObj.getMatching().add(serviceObj);
 				}

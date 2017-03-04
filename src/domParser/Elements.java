@@ -3,16 +3,11 @@ package domParser;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.util.Types;
-
 import org.w3c.dom.Node;
-
-import com.sun.glass.ui.CommonDialogs.Type;
 
 import dataObjects.PrimitiveTypes;
 import dataObjects.Tags;
 import javafx.util.Pair;
-import postGres.SQLScripts;
 
 public class Elements {
 	

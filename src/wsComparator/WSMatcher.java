@@ -7,7 +7,7 @@ import dataObjects.ServiceDetail;
 import outputObjects.*;
 
 public class WSMatcher {
-	public static MatchedWebServiceType compareWSDLS(ServiceDetail outputObj, ServiceDetail inputObj) {
+	public static MatchedWebServiceType compareWSDLS(ServiceDetail outputObj, ServiceDetail inputObj, boolean isSemantic) {
 		try{
 			
 			List<Double> containerForOperationScores = new ArrayList<Double>(); //To calculate final service score, stores averages of operations
@@ -33,17 +33,25 @@ public class WSMatcher {
 						{
 							ServiceDetail.Element inputElementObj = inputOperationObj.getElementName().get(ej);//Get reference to List Element object for input Operation
 							
-							double result = EditDistance.getSimilarity(outputElementObj.getElementName(),inputElementObj.getElementName());
-							
-							if(result >= 0.8)
-							{					
-								MatchedElementType elementObj = new MatchedElementType();
-								elementObj.setOutputElement(outputElementObj.getElementName());
-								elementObj.setInputElement(inputElementObj.getElementName());
-								elementObj.setScore(result);
-								elementList.add(elementObj);
-								containerForElementScores.add(result);
+							double result  = 0.0;
+							if(!isSemantic){
+								result = EditDistance.getSimilarity(outputElementObj.getElementName(),inputElementObj.getElementName());
+								if(result < 0.8) {			
+									continue;
+								}
+							}else{	
+								result = OntologyComparator.getScore(outputElementObj.getAnnotation(),inputElementObj.getAnnotation());
+								if(result < 0.5) {			
+									continue;
+								}
 							}
+							MatchedElementType elementObj = new MatchedElementType();
+							elementObj.setOutputElement(outputElementObj.getElementName());
+							elementObj.setInputElement(inputElementObj.getElementName());
+							elementObj.setScore(result);
+							elementList.add(elementObj);
+							containerForElementScores.add(result);
+
 						}
 					}				
 					if (!elementList.isEmpty()) {

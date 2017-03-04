@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="https://service.commercev3.com/CV3Data.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="https://service.commercev3.com/CV3Data.xsd">
 	<types>
-		<xsd:schema targetNamespace="https://service.commercev3.com/CV3Data.xsd"
->
+		<xsd:schema targetNamespace="https://service.commercev3.com/CV3Data.xsd">
 			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
 			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
 		</xsd:schema>

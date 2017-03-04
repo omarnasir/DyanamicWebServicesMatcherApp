@@ -8,13 +8,13 @@ import postGres.PostgreSQLJDBC;
 
 public class GenerateDataObjects {
 	
-	public static ServiceDetail populateWSDLServiceDetail(String ServiceName, String WSDLName)
+	public static ServiceDetail populateWSDLServiceDetail(String ServiceName, String WSDLName, String OperationType)
 			throws SQLException {
 		String sql;
 		ResultSet result;
-		sql = "SELECT O.\"OperationName\",O.\"OperationType\",E.\"ElementName\" from \"Element\" AS E,\"Operation\" "
+		sql = "SELECT O.\"OperationName\",O.\"OperationType\",E.\"ElementName\", E.\"Annotation\" from \"Element\" AS E,\"Operation\" "
 				+ "AS O, \"Service\" As S " + "Where S.\"ServiceID\" = O.\"ServiceID\" "
-				+ "And O.\"OperationID\" = E.\"OperationID\" " + "AND O.\"OperationType\" = '0' "
+				+ "And O.\"OperationID\" = E.\"OperationID\" " + "AND O.\"OperationType\" = '" + OperationType + "' "
 				+ "AND S.\"WSDLName\" = '" + WSDLName + "';";
 				
 		result = PostgreSQLJDBC.executeSelectQuery(sql);
@@ -29,7 +29,7 @@ public class GenerateDataObjects {
 		List<ServiceDetail.Element> elementListObj = null;
 		while(result.next())
 		{
-			String OperationName = result.getString("OperationName");
+			String OperationName = result.getString("OperationName"); //get from Row
 			if(OperationName.compareTo(OperationNameTemp) != 0) //Found new operation
 			{
 				OperationNameTemp = OperationName;
@@ -46,6 +46,7 @@ public class GenerateDataObjects {
 			}
 			ServiceDetail.Element elementObj = new ServiceDetail.Element();
 			elementObj.setElementName(result.getString("ElementName"));
+			elementObj.setAnnotation(result.getString("Annotation"));
 			elementListObj.add(elementObj);
 		}
 		return serviceDetailOBj;

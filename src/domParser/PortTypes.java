@@ -6,6 +6,7 @@ import java.util.List;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import dataObjects.Tags;
 import javafx.util.Pair;
 import postGres.SQLScripts;
 
@@ -18,7 +19,7 @@ public class PortTypes {
 
 			for (int j = 0; j < listObjPortType.getLength(); j++) // Iterate through child of <portType> Node
 			{
-				if (Helper.checkNode(listObjPortType.item(j), "operation")) { //Find <operation> tag inside <portType>
+				if (Helper.checkNode(listObjPortType.item(j), Tags.operation.name())) { //Find <operation> tag inside <portType>
 
 					String operationName = Helper.getNodeValue(listObjPortType.item(j)); //Extract <operation> "name" parameter
 					List<Pair<String,String>> elementOpList = new ArrayList<Pair<String,String>>();
@@ -29,7 +30,7 @@ public class PortTypes {
 						{
 							if(Helper.checkNode(bindingChild.getChildNodes().item(a),"operation")) //Find <operation> inside <binding>
 							{
-								Node bindingChildofChild = bindingChild.getChildNodes().item(a);
+								Node bindingChildofChild = bindingChild.getChildNodes().item(a); //<operation>
 								if(Helper.getNodeValue(bindingChildofChild).equals(operationName)){ //operation Found
 									for (int b=0; b<bindingChildofChild.getChildNodes().getLength(); b++){ //get child of <operation>
 										
