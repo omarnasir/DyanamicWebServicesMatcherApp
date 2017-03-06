@@ -14,7 +14,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="isEnrolledResponse">
     <complexType>
      <sequence>
-      <element name="isEnrolledReturn" type="impl:	"/>
+      <element name="isEnrolledReturn" type="impl:SubscriberInfo"/>
      </sequence>
     </complexType>
    </element>
@@ -68,7 +68,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="SubscriberInfoWS">
 
-      <wsdl:operation name="isEnrolled">
+      <wsdl:operation name="isEnrolled"> 
 
          <wsdl:input message="impl:isEnrolledRequest" name="isEnrolledRequest"/>
 

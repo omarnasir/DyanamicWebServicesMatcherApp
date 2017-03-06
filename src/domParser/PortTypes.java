@@ -16,7 +16,7 @@ public class PortTypes {
 			for(int i=0; i< portType.size();i++) //iterate through <portType> Nodes List
 			{
 			NodeList listObjPortType = portType.get(i).getChildNodes(); //get Node corresponding to <portType>
-
+		
 			for (int j = 0; j < listObjPortType.getLength(); j++) // Iterate through child of <portType> Node
 			{
 				if (Helper.checkNode(listObjPortType.item(j), Tags.operation.name())) { //Find <operation> tag inside <portType>
@@ -62,7 +62,6 @@ public class PortTypes {
 							elementOpList.add(new Pair<String,String>(Helper.getMessageName(listObjOperationType.item(k)),"1"));
 						}
 					}
-					
 					//Use Lists here
 					for(int k=0;k<elementOpList.size();k++)
 					{

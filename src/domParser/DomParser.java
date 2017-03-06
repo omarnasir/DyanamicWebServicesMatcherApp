@@ -46,7 +46,7 @@ public class DomParser {
 			doc.getDocumentElement().normalize();
 
 			NodeList listObj = doc.getDocumentElement().getChildNodes();
-
+			
 			Node service = null;
 			List<Node> portType = new ArrayList<Node>();
 			List<Node> schemaList = new ArrayList<Node>();
@@ -75,10 +75,8 @@ public class DomParser {
 				//System.out.println(serviceName);
 				SQLScripts.serviceQuery(serviceName, fileObj.getName());
 				PortTypes.parsePortTypes(portType, bindingList);
-				for (Node schema : schemaList){
-					if(!isSemantic) Messages.parseMessagesSyntactic(listObj, schema, fileObj.getName());
-					else Messages.parseMessagesSemantic(listObj, schema, fileObj.getName());
-				}
+					if(!isSemantic) Messages.parseMessagesSyntactic(listObj, schemaList, fileObj.getName());
+					else Messages.parseMessagesSemantic(listObj, schemaList, fileObj.getName());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

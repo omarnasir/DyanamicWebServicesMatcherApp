@@ -8,7 +8,7 @@ import dataObjects.Tags;
 public class Helper {
 
 	public static boolean checkNode(Node obj, String nodeName) {
-		return obj.getNodeName().toLowerCase().contains(nodeName);
+		return obj.getNodeName().toLowerCase().contains(nodeName.toLowerCase());
 	}
 
 	public static String getNodeValue(Node obj) {

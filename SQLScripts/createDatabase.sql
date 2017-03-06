@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.2
 -- Dumped by pg_dump version 9.6.2
 
--- Started on 2017-02-25 03:01:19
+-- Started on 2017-03-06 14:44:31
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -40,21 +40,22 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 187 (class 1259 OID 16424)
+-- TOC entry 185 (class 1259 OID 16418)
 -- Name: Element; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE "Element" (
     "ElementID" integer NOT NULL,
     "OperationID" integer NOT NULL,
-    "ElementName" text
+    "ElementName" text,
+    "Annotation" text
 );
 
 
 ALTER TABLE "Element" OWNER TO postgres;
 
 --
--- TOC entry 186 (class 1259 OID 16402)
+-- TOC entry 186 (class 1259 OID 16424)
 -- Name: Operation; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -70,20 +71,21 @@ CREATE TABLE "Operation" (
 ALTER TABLE "Operation" OWNER TO postgres;
 
 --
--- TOC entry 185 (class 1259 OID 16394)
+-- TOC entry 187 (class 1259 OID 16430)
 -- Name: Service; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE "Service" (
     "ServiceID" integer NOT NULL,
-    "ServiceName" text NOT NULL
+    "ServiceName" text NOT NULL,
+    "WSDLName" text
 );
 
 
 ALTER TABLE "Service" OWNER TO postgres;
 
 --
--- TOC entry 190 (class 1259 OID 16436)
+-- TOC entry 188 (class 1259 OID 16436)
 -- Name: seqElement; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -98,7 +100,7 @@ CREATE SEQUENCE "seqElement"
 ALTER TABLE "seqElement" OWNER TO postgres;
 
 --
--- TOC entry 189 (class 1259 OID 16434)
+-- TOC entry 189 (class 1259 OID 16438)
 -- Name: seqOperation; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -113,7 +115,7 @@ CREATE SEQUENCE "seqOperation"
 ALTER TABLE "seqOperation" OWNER TO postgres;
 
 --
--- TOC entry 188 (class 1259 OID 16432)
+-- TOC entry 190 (class 1259 OID 16440)
 -- Name: seqService; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -127,43 +129,14 @@ CREATE SEQUENCE "seqService"
 
 ALTER TABLE "seqService" OWNER TO postgres;
 
---
--- TOC entry 2141 (class 0 OID 16424)
--- Dependencies: 187
--- Data for Name: Element; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Element" ("ElementID", "OperationID", "ElementName") FROM stdin;
-\.
-
-
---
--- TOC entry 2140 (class 0 OID 16402)
--- Dependencies: 186
--- Data for Name: Operation; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Operation" ("OperationID", "ServiceID", "OperationName", "MessageName", "OperationType") FROM stdin;
-\.
-
-
---
--- TOC entry 2139 (class 0 OID 16394)
--- Dependencies: 185
--- Data for Name: Service; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Service" ("ServiceID", "ServiceName") FROM stdin;
-\.
-
 
 --
 -- TOC entry 2152 (class 0 OID 0)
--- Dependencies: 190
+-- Dependencies: 188
 -- Name: seqElement; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"seqElement"', 1, false);
+SELECT pg_catalog.setval('"seqElement"', 1, true);
 
 
 --
@@ -172,20 +145,20 @@ SELECT pg_catalog.setval('"seqElement"', 1, false);
 -- Name: seqOperation; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"seqOperation"', 1, false);
+SELECT pg_catalog.setval('"seqOperation"', 1, true);
 
 
 --
 -- TOC entry 2154 (class 0 OID 0)
--- Dependencies: 188
+-- Dependencies: 190
 -- Name: seqService; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"seqService"', 1, false);
+SELECT pg_catalog.setval('"seqService"', 1, true);
 
 
 --
--- TOC entry 2021 (class 2606 OID 16431)
+-- TOC entry 2017 (class 2606 OID 16443)
 -- Name: Element Element_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -194,7 +167,7 @@ ALTER TABLE ONLY "Element"
 
 
 --
--- TOC entry 2019 (class 2606 OID 16409)
+-- TOC entry 2019 (class 2606 OID 16445)
 -- Name: Operation OutputOperation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -203,7 +176,7 @@ ALTER TABLE ONLY "Operation"
 
 
 --
--- TOC entry 2017 (class 2606 OID 16401)
+-- TOC entry 2021 (class 2606 OID 16447)
 -- Name: Service Service_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -211,7 +184,7 @@ ALTER TABLE ONLY "Service"
     ADD CONSTRAINT "Service_pkey" PRIMARY KEY ("ServiceID");
 
 
--- Completed on 2017-02-25 03:01:19
+-- Completed on 2017-03-06 14:44:31
 
 --
 -- PostgreSQL database dump complete
