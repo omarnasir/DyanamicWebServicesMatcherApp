@@ -9,4 +9,4 @@ As for Sematic matching, OWL web ontology language is used. OWlAPI is used to cl
 
 Initial parsing of all WSDL files is done using a generic DOM parser through recursive functions. It finds associated elements with each operation, and stores them in a locally hosted PostgreSQL database, which is later called when the actual comparison has to be performed.
 
-Further details can be found in the Project Report PDF.
+<b>Further details can be found in the Project Report PDF.</b>
